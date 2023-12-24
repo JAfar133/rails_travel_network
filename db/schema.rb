@@ -46,6 +46,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_24_120457) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "favorite_places", "travel_places"
-  add_foreign_key "favorite_places", "users"
+  add_foreign_key "favorite_places", "travel_places", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "favorite_places", "users", on_update: :cascade, on_delete: :cascade
 end

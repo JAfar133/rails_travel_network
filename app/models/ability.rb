@@ -8,6 +8,7 @@ class Ability
       can :manage, :all
     elsif user.role == 'user'
       can :read, :all
+      can :add_to_favorites, TravelPlace
     end
   end
 end

@@ -14,6 +14,10 @@ class TravelPlacesController < ApplicationController
     @travel_place = current_user.created_travel_places.build
   end
 
+  def show
+    @travel_place = TravelPlace.find(params[:id])
+  end
+
   def create
     @travel_place = current_user.created_travel_places.build(travel_place_params)
     if @travel_place.save

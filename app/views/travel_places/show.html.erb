@@ -1,20 +1,34 @@
-  <li><%= link_to 'Назад', favorites_user_path(current_user) %></li>
-  <div class="travel-place">
-    <h3><%= @travel_place.name %></h3>
-    <p><strong>Местоположение:</strong> <%= @travel_place.location %></p>
-    <p><strong>Описание:</strong> <%= @travel_place.description %></p>
-    <p><strong>Создано:</strong> <%= @travel_place.created_at %></p>
-    <p><strong>Обновлено:</strong> <%= @travel_place.updated_at %></p>
+<%= link_to 'Back', favorites_user_path(current_user) %>
+  
 
-    <% if user_signed_in? && current_user.agent? 
-        if current_user.agent? %>
-          <%= link_to 'Редактировать', edit_travel_place_path(@travel_place) %>
-          <%= button_to 'Удалить', @travel_place, method: :delete, data: { confirm: 'Вы уверены?' } %>
+<div class="travel-place card w-25">
+      <div class="card-header">
+        <h5 class="card-title"><%= @travel_place.name %></h5>
+        <% if user_signed_in? && current_user.agent? %>
+            <%= link_to 'Edit', edit_travel_place_path(@travel_place) %>
         <% end %>
-        <% if current_user.favorite_place?(@travel_place) %>
-          <%= button_to 'Remove from favorites', add_to_favorites_travel_place_path(@travel_place), method: :post, class: 'btn btn-danger' %>
-        <% else %>
-          <%= button_to 'Add to favorites', add_to_favorites_travel_place_path(@travel_place), method: :post, class: 'btn btn-primary' %>
+      </div>
+      <div class="card-body">
+        
+        <p><strong>Location:</strong> <%= @travel_place.location %></p>
+        <p><strong>Description:</strong> <%= @travel_place.description %></p>
+        <p><strong>Creator:</strong> <%= "#{@travel_place.creator.last_name} #{@travel_place.creator.first_name}" %></p>
+        <p><strong>Created at:</strong> <%= @travel_place.created_at %></p>
+        <p><strong>Updated_at:</strong> <%= @travel_place.updated_at %></p>
+      
+        
+      </div>
+      <div class="card-footer">
+        <% if user_signed_in? 
+            if current_user.agent? %>
+              <%= link_to 'Edit', edit_travel_place_path(@travel_place) %>
+              <%= button_to 'Delete',@travel_place, method: :delete, class: 'btn btn-danger' %>
+            <% end %>
+            <% if current_user.favorite_place?(@travel_place) %>
+              <%= button_to 'Remove from favorites', add_to_favorites_travel_place_path(@travel_place), method: :post, class: 'btn btn-warning' %>
+            <% else %>
+              <%= button_to 'Add to favorites', add_to_favorites_travel_place_path(@travel_place), method: :post, class: 'btn btn-primary' %>
+            <% end %>
         <% end %>
-    <% end %>
-  </div>
+      </div>
+    </div>
