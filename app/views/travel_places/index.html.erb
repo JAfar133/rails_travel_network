@@ -1,0 +1,26 @@
+<% if user_signed_in? %>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+<% end %>
+
+<h1>Список мест для отдыха</h1>
+
+<% if user_signed_in? %>
+  <%= link_to 'Добавить новое место', new_travel_place_path %>
+<% end %>
+
+<% @travel_places.each do |travel_place| %>
+  <div class="travel-place">
+    <h3><%= travel_place.name %></h3>
+    <p><strong>Местоположение:</strong> <%= travel_place.location %></p>
+    <p><strong>Описание:</strong> <%= travel_place.description %></p>
+    <p><strong>Создано:</strong> <%= travel_place.created_at %></p>
+    <p><strong>Обновлено:</strong> <%= travel_place.updated_at %></p>
+
+    <% if user_signed_in? %>
+      <!-- Покажем дополнительные действия для авторизованных пользователей, например, редактирование и удаление -->
+        <%= link_to 'Редактировать', edit_travel_place_path(travel_place) %>
+        <%= button_to  'Удалить', travel_place, method: :delete, data: { confirm: 'Вы уверены?' } %>
+    <% end %>
+  </div>
+  <hr>
+<% end %>

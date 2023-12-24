@@ -1,0 +1,22 @@
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    row-gap: 10px;
+}
+form button {
+    width: 100px;
+    margin: 5px 0;
+}
+form .field {
+    display: block;
+}
+
+.field input, .field textarea {
+    width: 200px;
+}
+.links {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+}
