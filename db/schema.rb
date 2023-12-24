@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_23_211006) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_24_120457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "favorite_places", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "travel_place_id"
+    t.index ["travel_place_id"], name: "index_favorite_places_on_travel_place_id"
+    t.index ["user_id", "travel_place_id"], name: "index_favorite_places_on_user_id_and_travel_place_id", unique: true
+    t.index ["user_id"], name: "index_favorite_places_on_user_id"
+  end
 
   create_table "travel_places", force: :cascade do |t|
     t.string "location"
@@ -33,9 +41,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_23_211006) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "role"
+    t.string "role", default: "user", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "favorite_places", "travel_places"
+  add_foreign_key "favorite_places", "users"
 end

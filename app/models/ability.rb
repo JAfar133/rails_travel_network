@@ -1,15 +1,13 @@
-# frozen_string_literal: true
-
 class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new # гость (не авторизированный пользователь)
+    user ||= User.new
 
     if user.role == 'agent'
-      can :manage, TravelPlace
-    else
-      can :read, TravelPlace
+      can :manage, :all
+    elsif user.role == 'user'
+      can :read, :all
     end
   end
 end

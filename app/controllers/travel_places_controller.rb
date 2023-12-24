@@ -1,5 +1,6 @@
 class TravelPlacesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :show, :index]
+  load_and_authorize_resource
 
   def index
     @travel_places = TravelPlace.all
@@ -10,17 +11,31 @@ class TravelPlacesController < ApplicationController
   end
 
   def new
-    @travel_place = current_user.travel_places.build
+    @travel_place = current_user.created_travel_places.build
   end
 
   def create
-    @travel_place = current_user.travel_places.build(travel_place_params)
+    @travel_place = current_user.created_travel_places.build(travel_place_params)
     if @travel_place.save
       redirect_to travel_places_path, notice: 'Travel place was successfully created.'
     else
       render :new
     end
-  end  
+  end
+  
+  def add_to_favorites
+    @travel_place = TravelPlace.find(params[:id])
+
+    if current_user.favorite_place?(@travel_place)
+      current_user.remove_from_favorites(@travel_place)
+      flash[:notice] = 'Travel place removed from favorites.'
+    else
+      current_user.add_to_favorites(@travel_place)
+      flash[:notice] = 'Travel place added to favorites.'
+    end
+
+    redirect_to travel_places_path
+  end
 
   def update
     @travel_place = TravelPlace.find(params[:id])

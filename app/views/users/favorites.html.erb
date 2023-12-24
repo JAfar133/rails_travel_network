@@ -1,0 +1,15 @@
+<!-- app/views/users/favorites.html.erb -->
+<%= link_to 'Назад', travel_places_path %>
+<h1>Your Favorite Places</h1>
+
+<% if @favorite_places.present? %>
+  <ul>
+    <% @favorite_places.each do |travel_place| %>
+      <li>
+        <%= link_to travel_place.name, travel_place %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No favorite places yet.</p>
+<% end %>
