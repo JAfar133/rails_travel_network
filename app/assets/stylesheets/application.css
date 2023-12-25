@@ -11,7 +11,7 @@ form {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    max-width: 450px;
+    max-width: 400px;
 }
 form button {
     margin: 5px 0;
@@ -19,13 +19,21 @@ form button {
 form .field {
     display: block;
 }
-.card-header {
+.card-header, .card-footer {
     display: flex;
     justify-content: space-between;
 }
-/* .field input, .field textarea {
-    width: 200px;
-} */
+textarea, input[type=text], input[type=email], input[type=password] {
+    width: 100%;
+}
+textarea {
+    height: 100px;
+}
+.travel-place {
+    max-width: 400px;
+    width: 100%;
+}
+
 .links {
     margin-top: 10px;
     display: flex;

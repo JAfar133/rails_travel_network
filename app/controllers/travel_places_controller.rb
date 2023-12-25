@@ -1,5 +1,5 @@
 class TravelPlacesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :show, :index]
+  before_action :authenticate_user!, only: [:new, :create, :show, :index, :edit, :update, :destroy]
   load_and_authorize_resource
 
   def index
