@@ -48,4 +48,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_24_120457) do
 
   add_foreign_key "favorite_places", "travel_places", on_update: :cascade, on_delete: :cascade
   add_foreign_key "favorite_places", "users", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "travel_places", "users", column: "created_by"
 end

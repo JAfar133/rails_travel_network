@@ -1,21 +1,17 @@
 class TravelPlacesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :show, :index, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :find_travel_place, only: [:edit, :show, :update, :destroy, :add_to_favorites]
+  
   load_and_authorize_resource
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @travel_places = TravelPlace.all
   end
 
-  def edit
-    @travel_place = TravelPlace.find(params[:id])
-  end
-
   def new
     @travel_place = current_user.created_travel_places.build
-  end
-
-  def show
-    @travel_place = TravelPlace.find(params[:id])
   end
 
   def create
@@ -28,30 +24,23 @@ class TravelPlacesController < ApplicationController
   end
   
   def add_to_favorites
-    @travel_place = TravelPlace.find(params[:id])
-
     if current_user.favorite_place?(@travel_place)
       current_user.remove_from_favorites(@travel_place)
-      flash[:notice] = 'Travel place removed from favorites.'
     else
       current_user.add_to_favorites(@travel_place)
-      flash[:notice] = 'Travel place added to favorites.'
     end
-
     redirect_to travel_places_path
   end
 
   def update
-    @travel_place = TravelPlace.find(params[:id])
     if @travel_place.update(travel_place_params)
       redirect_to travel_places_path, notice: 'Travel place was successfully updated.'
     else
-      render :edit
+      render :edit, notice: 'Error to update travel place'
     end
   end
 
   def destroy
-    @travel_place = TravelPlace.find(params[:id])
     @travel_place.destroy
     redirect_to travel_places_path, notice: 'Travel place was successfully destroyed.'
   end
@@ -61,4 +50,14 @@ class TravelPlacesController < ApplicationController
   def travel_place_params
     params.require(:travel_place).permit(:location, :name, :description)
   end
+
+  def find_travel_place
+    @travel_place = TravelPlace.find(params[:id])
+  end
+  
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:alert] = 'Travel place not found.'
+    redirect_to error_path
+  end
+
 end
