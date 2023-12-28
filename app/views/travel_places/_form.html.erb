@@ -1,29 +1,24 @@
 <!-- views/travel_places/_form.html.erb -->
 <%= form_with(model: travel_place, local: true, html: { class: 'form' }) do |form| %>
-  <% if travel_place.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(travel_place.errors.count, "error") %> form filling:</h2>
-      <ul>
-        <% travel_place.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
     </div>
   <% end %>
 
   <div class="field">
     <%= form.label :name, class: "form-label" %></br>
-    <%= form.text_field :name, class: "form-control" %>
+    <%= form.text_field :name, presence: true, class: "form-control" %>
   </div>
 
   <div class="field">
     <%= form.label :location, class: "form-label" %></br>
-    <%= form.text_field :location, class: "form-control" %>
+    <%= form.text_field :location, presence: true, class: "form-control" %>
   </div>
 
   <div class="field">
     <%= form.label :description, class: "form-label" %></br>
-    <%= form.text_area :description, class: "form-control" %>
+    <%= form.text_area :description, presence: true, class: "form-control" %>
   </div>
 
   <div class="actions">

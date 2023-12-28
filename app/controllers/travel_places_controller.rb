@@ -16,11 +16,11 @@ class TravelPlacesController < ApplicationController
 
   def create
     @travel_place = current_user.created_travel_places.build(travel_place_params)
-    if @travel_place.save
-      redirect_to travel_places_path, notice: 'Travel place was successfully created.'
-    else
-      render :new
-    end
+    @travel_place.save!
+    redirect_to travel_places_path, notice: 'Travel place was successfully created.'
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:alert] = "Error creating travel place: #{e.message}"
+    redirect_to new_travel_place_path
   end
   
   def add_to_favorites
@@ -36,9 +36,11 @@ class TravelPlacesController < ApplicationController
     if @travel_place.update(travel_place_params)
       redirect_to travel_places_path, notice: 'Travel place was successfully updated.'
     else
-      render :edit, notice: 'Error to update travel place'
+      flash[:alert] = 'Error updating travel place.'
+      redirect_to edit_travel_place_path
     end
   end
+  
 
   def destroy
     @travel_place.destroy

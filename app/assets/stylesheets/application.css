@@ -23,6 +23,9 @@ form .field {
     display: flex;
     justify-content: space-between;
 }
+.card-title {
+    overflow-wrap: anywhere;
+}
 textarea, input[type=text], input[type=email], input[type=password] {
     width: 100%;
 }
