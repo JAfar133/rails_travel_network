@@ -13,6 +13,7 @@
     <h3><%= travel_place.name %></h3>
     <p><strong>Местоположение:</strong> <%= travel_place.location %></p>
     <p><strong>Описание:</strong> <%= travel_place.description %></p>
+    <p><strong>Entered by:</strong> <%= "#{travel_place.creator.last_name} #{travel_place.creator.first_name}" %></p>
     <p><strong>Создано:</strong> <%= travel_place.created_at %></p>
     <p><strong>Обновлено:</strong> <%= travel_place.updated_at %></p>
 

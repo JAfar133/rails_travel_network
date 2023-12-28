@@ -38,4 +38,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_23_211006) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "travel_places", "users", column: "created_by"
 end

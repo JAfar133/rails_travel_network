@@ -8,5 +8,7 @@ class CreateTravelPlaces < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
+
+    add_foreign_key :travel_places, :users, column: :created_by
   end
 end
